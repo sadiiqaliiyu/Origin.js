@@ -14,19 +14,28 @@
         window.onload = function(){
             testInput = document.querySelector("#test");
             
-            var Andrew = {}, myKid = {};
-            prepareKnot( Andrew, "name");
+            Andrew = {}; myKid = {};
+            prepareKnot( Andrew, "name",{ write:false});
             var testLace = lace( Andrew, "name", function( value ){
                 testInput.value = value;
                 console.log("called val");
             });
             Andrew.name = "Andrew";
-            tieProperties( Andrew, "name", myKid, "dadName");
+            tieProperties( Andrew, "name", myKid, "dadName",{
+                set: function(val){
+                    this._dadName = val;
+                    console.log("changed dads name");
+                }
+            });
             
             testLace.unlace();
             console.log( myKid.dadName );
             myKid.dadName = "Drew";
             console.log( Andrew.name );
+            
+            // attempting to wrap dom here
+            // var test = { };
+            // prepareKnot(test, "value", )
 
         }; 
     </script>
