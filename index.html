@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Knotlace.js </title>
+        <script type="text/javascript" src="knotlace.js"></script>
+    </head>
+    
+    <body>
+        <input id="test" value="randomValue"/>
+    </body>
+    
+    <script type="text/javascript">
+        var testInput;
+        window.onload = function(){
+            testInput = document.querySelector("#test");
+            
+            var Andrew = {}, myKid = {};
+            prepareKnot( Andrew, "name");
+            var testLace = lace( Andrew, "name", function( value ){
+                testInput.value = value;
+                console.log("called val");
+            });
+            Andrew.name = "Andrew";
+            tieProperties( Andrew, "name", myKid, "dadName");
+            
+            testLace.unlace();
+            console.log( myKid.dadName );
+            myKid.dadName = "Drew";
+            console.log( Andrew.name );
+
+        }; 
+    </script>
+    
+</html>
