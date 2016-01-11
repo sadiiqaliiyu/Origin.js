@@ -1,0 +1,97 @@
+ <!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .bad{
+                color: red;
+            }
+            .good{
+                color: purple;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="test" class="bad">val<div>Further down the list..</div></div>
+    </body> 
+    <script type ="text/javascript">
+    
+        /*
+        	Creates an entirely new object that is, essentially, the 
+          exact same object.
+          note: any properties added to this object will not 
+          	be added to the base.
+        */
+        function getAttributes(el) {
+            var nodes = [];
+            var bases = [];
+            var atts = el.attributes;
+            var att;
+            for (var i = 0, l = atts.length; i < l; i++) {
+                att = atts[i];
+                bases.push(att);
+                nodes.push(att.nodeName);
+                //values.push(att.nodeValue);
+            }
+            return {
+                bases: bases,
+                keys: nodes
+            };
+        }
+    
+        function wrapNode(el, linker) {
+            linker = linker || {};
+            var data = getAttributes(el);
+            var keys = data.keys;
+            var bases = data.bases;
+        
+            for (var i = 0, l = keys.length; i < l; i++) {
+                var key = keys[i];
+                var base = bases[i];
+                Object.defineProperty(linker, key, {
+                    set: function(base, key, val) {
+                        base["value"] = val;
+                        console.log("changed prop ", key, "to:", val)
+                        this["_" + key] = base.nodeValue;
+                    }.bind(linker, base, key)
+                    ,
+                    get: function(base) {
+                        return base.value;
+                    }.bind(linker, base)
+                });
+            }
+            return linker;
+        };
+
+        var extraProps = [
+                "innerHTML",
+                "className",
+                "classList",
+            ];
+        var removeProps = [
+            
+            ]
+        function realNodeWrap(el, linker) {
+            linker = linker || {};
+            for (var prop in el ) {
+                Object.defineProperty(linker, prop, {
+                    set: function(base, key, val) {
+                        base[key] = val;
+                        this["_" + key] = base.nodeValue;
+                    }.bind(linker, el, prop)
+                    ,
+                    get: function(base, prop) {
+                        return base[prop];
+                    }.bind(linker, el, prop)
+                });
+            }
+            return linker;
+        };        
+        
+        
+        window.onload = function(){
+            var domNode = document.querySelector("#test");
+            
+            wrapped = realNodeWrap(domNode);
+        }
+    </script>
+</html>
