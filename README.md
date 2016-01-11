@@ -1,5 +1,6 @@
 # Origin.js
-A future 'solves-all' data-binding library.
+A future 'solves-all' data-binding library. Effectively binds objects together
+with the utmost abstraction. 
 Currently in progress.
 
 Features shown may have not yet been implemented.
