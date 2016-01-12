@@ -9,11 +9,22 @@
 - [x] create function that can deep listen ie: lace( obj, "propName.*"/"*")
 # Todo 
 
+### tasks: 1/12/2016 -
+- ~~[ ] fix up and standardize the dom wrapper~~
+- [ ] Make new system for syncing dom with Origin.
+    - make a two way listening system
+    - check for changes from the dom and if 2 way binding report change to origin
+    - if changes are read from the Origin (and weren't triggered by dom) overwrite
+    - create a system to remove listeners (both ways)
+- [ ] make a dom reader system 
+    - if an attribute has binding(or innerHTML), add binding for that element 
+    - if 
 - [ ] make default origin setter return true, not the passed value.
 - [ ] Ignore functions on deep-rooting
 - [ ] actually create the objectQuery system 
 - [ ] create the querying system for Origins 
-- [ ] Create system that take an object map 
+- [ ] Create system that take an object map
+
 - [ ] Setter for objects (when new object !== old object)
     - remove all listeners
     - don't let child setters have access to the original setter 
