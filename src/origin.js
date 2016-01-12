@@ -77,7 +77,6 @@ var Origin = (function OriginClosure(){
     */
     function registerProperty(obj, property, definition) {
         definition = definition || {};// optional
-        console.log("prop;", property)
         
         // create a parent path if not existing, used to call parent emitters.
         definition.parentList = definition.parentList || []; 
@@ -188,7 +187,6 @@ var Origin = (function OriginClosure(){
         // Go through each property and make setters for unset properties
         (function runThrough(ranObj, path, parentList){
             var props = Object.getOwnPropertyNames( ranObj );
-            console.log( "props: ", props )
             
             for(var i = 0, l = props.length; i < l; i ++ ){
                 var prop = props[i];
