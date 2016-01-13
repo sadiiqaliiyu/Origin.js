@@ -14,6 +14,7 @@
 - [ ] Make new system for syncing dom with Origin.
     - make a two way listening system
     - check for changes from the dom and if 2 way binding report change to origin
+        - check this answer http://stackoverflow.com/a/22736833
     - if changes are read from the Origin (and weren't triggered by dom) overwrite
     - create a system to remove listeners (both ways)
 - [ ] make a dom reader system 
@@ -24,6 +25,8 @@
 - [ ] actually create the objectQuery system 
 - [ ] create the querying system for Origins 
 - [ ] Create system that take an object map
+- [ ] Possibly put all IDS into a container to be ref'd instead of hard-coding.
+
 
 - [ ] Setter for objects (when new object !== old object)
     - remove all listeners
