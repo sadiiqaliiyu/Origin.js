@@ -25,6 +25,7 @@
 - [ ] create the querying system for Origins 
 - [ ] Create system that take an object map
 - [ ] Possibly put all IDS into a container to be ref'd instead of hard-coding.
+---
 
 
 - [ ] Setter for objects (when new object !== old object)
@@ -51,8 +52,8 @@
 - [ ] add dom rendering (possibly reffer to 'nodes' as 'shoes')
     - create ability to run through attributes and link them to appropriate objects and properties
         - html binding conventions: 
-        - <>baseName.path read and write
-        - >baseName.path read only
+        - `==baseName.path` read and write
+        - `=baseName.path` read only
     - create ability to do a 'by-node' unlace that is recursive
         - remove parent nodes listener, then proceed this process on all children
     - make this functionality compatible with the wrapping method (or whatever is ended up used)
