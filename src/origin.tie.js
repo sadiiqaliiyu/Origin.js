@@ -14,6 +14,27 @@ Origin.Tie = new(function OriginTie(){
     };
     
     
+    var updateInterval;
+    function processChanges(){
+        
+    };
+    
+    this.turnOff = function stopTying(){
+        window.clearInterval( updateInterval );
+    };
+    
+    var tieWait = 10;
+    this.turnOn = function startTying(){
+        updateInterval = window.setInterval( processChanges, tieWait );
+    };
+    
+    this.changeUpdateSpeed = function tieSpeed( speed ){
+        tieWait = speed;
+        this.turnOff();
+        this.turnOn();
+    };
+    
+    
     /*
         @summary: OriginElTie is class that organizes the handling of syncing(tying)
             a dom element with a Origin object. 
