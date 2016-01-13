@@ -12,11 +12,10 @@
 ### tasks: 1/12/2016 -
 - ~~[ ] fix up and standardize the dom wrapper~~
 - [ ] Make new system for syncing dom with Origin.
-    - make a two way listening system
-    - check for changes from the dom and if 2 way binding report change to origin
-        - check this answer http://stackoverflow.com/a/22736833
-    - if changes are read from the Origin (and weren't triggered by dom) overwrite
-    - create a system to remove listeners (both ways)
+    - main update branch
+    - checks for differences between previous node val and current val
+    - if can write then updates the original value 
+    - if differences between origin val and current, set to origin val.
 - [ ] make a dom reader system 
     - if an attribute has binding(or innerHTML), add binding for that element 
     - if 
@@ -62,4 +61,13 @@
 
 NOTE: `Object.assign` used. Ecma6 feature. Need polyfill.
     
+    
+
+### canceled 
+- ~~[ ] Make new system for syncing dom with Origin.~~
+    - ~~make a two way listening system~~
+    - ~~check for changes from the dom and if 2 way binding report change to origin~~
+        - ~~check this answer http://stackoverflow.com/a/22736833~~
+    - ~~if changes are read from the Origin (and weren't triggered by dom) overwrite~~
+    - ~~create a system to remove listeners (both ways)~~
     
