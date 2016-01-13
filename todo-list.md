@@ -12,7 +12,12 @@
 ### tasks: 1/12/2016 -
 - ~~[ ] fix up and standardize the dom wrapper~~
 - [ ] Make new system for syncing dom with Origin.
-    - main update branch
+    - [x] main update branch
+    - [ ] ***exceptions***
+        - className 
+           - className should be treated as an array.
+           - `className="class1 ==origin.prop"`
+           - would translate to: `className[1]={tie}`
     - checks for differences between previous node val and current val
     - if can write then updates the original value 
     - if differences between origin val and current, set to origin val.
