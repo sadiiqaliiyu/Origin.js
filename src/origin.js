@@ -301,5 +301,6 @@ var Origin = (function OriginClosure(){
         this.linkPaths = tieProperties;
         this.rework = reviseObjectPath;
         this.sync = lace;
+        this.calcPath = getPathData;
     })();
 })();
