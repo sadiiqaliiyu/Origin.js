@@ -13,11 +13,6 @@
 - ~~[ ] fix up and standardize the dom wrapper~~
 - [ ] Make new system for syncing dom with Origin.
     - [x] main update branch
-    - [ ] ***exceptions***
-        - className 
-           - className should be treated as an array.
-           - `className="class1 ==origin.prop"`
-           - would translate to: `className[1]={tie}`
     - checks for differences between previous node val and current val
     - if can write then updates the original value 
     - if differences between origin val and current, set to origin val.
@@ -76,4 +71,9 @@ NOTE: `Object.assign` used. Ecma6 feature. Need polyfill.
         - ~~check this answer http://stackoverflow.com/a/22736833~~
     - ~~if changes are read from the Origin (and weren't triggered by dom) overwrite~~
     - ~~create a system to remove listeners (both ways)~~
+    - [ ] ***exceptions***
+        - className 
+           - className should be treated as an array.
+           - `className="class1 ==origin.prop"`
+           - would translate to: `className[1]={tie}`
     
