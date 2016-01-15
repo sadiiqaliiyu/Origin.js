@@ -3,6 +3,8 @@ A future 'solves-all' data-binding library. Effectively binds objects together
 with the utmost abstraction. 
 Currently in progress.
 
+[Check out the wiki!](../../wiki) The wiki offers more insight on the actual code/process, and also further details about how to use this library.
+
 Features shown may have not yet been implemented.
 
 
