@@ -7,6 +7,7 @@
     - ~~probably activated by a function called this.wait(); or something~~
     - made it so setters require returns to proceed
 - [x] create function that can deep listen ie: lace( obj, "propName.*"/"*")
+- [x] made wiki
 # Todo 
 
 ### tasks: 1/12/2016 -
