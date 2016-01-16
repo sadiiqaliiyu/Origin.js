@@ -2,18 +2,40 @@
 <html>
     <head>
         <style>
+            .class1{
+                color: red;
+            }
+            .class2{
+                color: yellow;
+                background-color: black;
+            }
+            .class3{
+                color: blue;
+                font-family: "helvitica";
+            }
         </style>
         <script type="text/javascript" src="origin.js"></script>
         <script type="text/javascript" src="origin.tie.js"></script>
     </head>
     <body>
-        <div id="test" class="==origin.classVal">
-            Random Text
-            <div>==Val.origin</div>
+        class options: class1, class2, class3
+        <div id="test" class="=window.myClass" style="font-size:==window.mySize;">
+            class:<input id="classChanger" value="==window.myClass"/><br/>
+            font-size:<input id="styleChanger" value="==window.mySize"/>
+            </br>
+            <b>class:</b>  <span>=window.myClass</span><br/>
+            <b>font-size:</b>  <span>=window.mySize</span>
         </div>
     </body> 
     <script type ="text/javascript">
+        /*global Origin*/
+        var myClass = "class..";
+        var mySize = "1em";
         window.onload = function(){
+            Origin.Tie.turnOn();
+            var test = document.querySelector("#test");
+            var tieTest = Origin.Tie.get(test);
+            tieTest.parse({"window":window}, true);
         }
     </script>
 </html>
