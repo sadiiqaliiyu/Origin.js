@@ -12,17 +12,16 @@
 
 ### tasks: 1/12/2016 -
 - ~~[ ] fix up and standardize the dom wrapper~~
-- [ ] Make new system for syncing dom with Origin.
+- [x] Make new system for syncing dom with Origin.
     - [x] main update branch
     - checks for differences between previous node val and current val
     - if can write then updates the original value 
     - if differences between origin val and current, set to origin val.
-- [ ] make a dom parsing system 
+- [x] make a dom parsing system 
     - if an attribute has binding(or innerHTML), add binding for that element 
     - if inline-styling has binding then add binding for that element
 - [ ] for binding dom nodes individually, make a function for supported events
     - originEl.bindStyles
-    - originEl.bindContent
     - originEl.bindAttributes
 - [ ] make default origin setter return true, not the passed value.
 - [ ] Ignore functions on deep-rooting
