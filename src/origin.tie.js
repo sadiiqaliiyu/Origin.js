@@ -1,15 +1,50 @@
 /* global Origin */
 Origin.Tie = new(function OriginTie(){
     "use strict";
+    /// Errors
+    var Errors = (function makeErrors(){
+        var directorNotObject = new Error("Director must be an Object.");
+        directorNotObject.id = "OGDirNotObj";
+        
+        var overTied = new Error();
+        overTied.final = function(refName, el){
+            this.message = refName + " is already defined on element: " + el;
+            return this;
+        }
+        overTied.id = "OGTiePropOver";
+        
+        
+        var objNotInDirector = new Error();
+        objNotInDirector.final = function( objName, refName ){
+             this.message = "\""+ objName + "\" was not found " +
+                " in the director for \"" + refName + "\"";
+            return this;
+        }
+        objNotInDirector.id = "OGDirUNDF";
+        
+        
+        var attrNonExistent = new Error();
+        attrNonExistent.final = function( attr, el ){
+            this.message = "No such attribute \"" + attr + "\" on " + el;
+            return this;
+        }
+        attrNonExistent.id = "OGAttrNULL"
+        
+        return {
+            directorNotObject: directorNotObject,
+            overTied: overTied,
+            objNotInDirector: objNotInDirector,
+            attrNonExistent: attrNonExistent
+        };
+    })();
+    
 
     /*
         @summary: Provides error checking for any directors passed to us.
     */
     function judgeDirector( director ){
         if( director !== Object(director) ){
-            var err = new Error("Director must be an Object.");
-            err.id = "OGDirNotObj";
-            throw (err);
+            throw ( Errors.directorNotObject  );
         }
     }
     
@@ -159,10 +194,7 @@ Origin.Tie = new(function OriginTie(){
         */
         this._defineTie = function defineTie( tieRef, objBase, objPath, elPropBase, elProp, write) {
             if (tieRef in this.tiedData) {
-                var err = new Error(tieRef + 
-                                " is already defined on element: " + this.el);
-                err.id = "OGTiePropOver";
-                throw err;
+                throw Errors.overTied.final(tieRef, this.el);
             }
             var dataFunction = createDataRefence( objBase, objPath );
             this.tiedData[tieRef] = {
@@ -173,6 +205,20 @@ Origin.Tie = new(function OriginTie(){
                 previousValue: null
             };
         };
+        function parseStraightPath( _director, fullPath ){
+            var fromIndex = 0;
+            var toIndex = fullPath.indexOf('.');
+            var objName = fullPath.substring( fromIndex, toIndex );
+            var objBase = _director[objName];
+            if( !objBase ){ 
+                throw (Errors.objNotInDirector.final( objName ));
+            }
+            var objPath = fullPath.substring( toIndex+1, fullPath.length );
+            return {
+                base: objBase,
+                path: objPath
+            };
+        }
         /**
             @summary: Used for declarative parsing. Finalizes a parseable value.
             @argument "_director": {}, dictionary of object bases
@@ -189,15 +235,13 @@ Origin.Tie = new(function OriginTie(){
                 var objName = fullPath.substring( fromIndex, toIndex );
                 var objBase = _director[objName];
                 if( !objBase ){ 
-                    var err = new Error( "\""+objName + "\" was not found " +
-                            " in the director for \"" + tieRef + "\"");
-                    err.id = "OGDirUNDF";
-                    throw (err);
+                    throw (Errors.objNotInDirector.final( objName, tieRef ));
                 }
                 var objPath = fullPath.substring( toIndex+1, fullPath.length );
                 this._defineTie( tieRef, objBase, objPath, elBase, elProp, canWrite);
             }
         };
+        
     
         /// SYNCING VALUES TOGETHER
         this.update = function update(){
@@ -318,7 +362,7 @@ Origin.Tie = new(function OriginTie(){
                 var toIndex = parseStr.indexOf(":");
                 var property = parseStr.substr(0, toIndex);
                 var val = parseStr.substring( toIndex +1, parseStr.length);
-                var ref = "attr-" + property;
+                var ref = "style-" + property;
                 // we don't try to catch the error because we don't want to 
                 // let the program continue if there's an undefined reference.
                 this._execPath( _director, val, ref, base, property);
@@ -328,22 +372,47 @@ Origin.Tie = new(function OriginTie(){
         
         /// IMPERATIVE BINDING, bind properties directly with JS
         this.tieAttributes = function tieAttributes( _director, attrList){
+            judgeDirector(_director);
             var el = this.el;
             for( var I in attrList ){
                 var attr = attrList[I];
                 var property = attr.name;
-                var base;
+                var elBase;
                 if( el[property] ){
-                    base = el;
+                    elBase = el;
                 }
                 else{
-                    
+                    if( el.getAttribute( property  ) === null ){
+                        el.setAttribute( property, "?");
+                    }
+                    property = "value";
+                    for( var i = 0, l = el.attributes.length; i < l; i ++ ){
+                        if( el.attributes[i].name === attr.name){
+                            elBase = el.attributes[i];
+                        }
+                    }
                 }
-                //this._defineTie( tieRef, objBase, objPath, elBase, elProp, canWrite);
+                var tieRef = "attr-" + attr.name;
+                var obj = parseStraightPath( _director, attr.path );
+                this._defineTie( tieRef, obj.base, obj.path, elBase, property, attr.canWrite);
             }
+            this.save(); this.update();
         };
         this.tieStyles = function tieStyles( _director, styleList ){
-            
+            judgeDirector(_director);
+            var el = this.el;
+            for( var I in styleList ){
+                var style = styleList[I];
+                var property = style.name;
+                var elBase = el.style;
+                if( elBase[property] === undefined ){
+                    throw Errors.attrNonExistent.final( property );
+                }
+                var tieRef = "style-" + style.name;
+                var obj = parseStraightPath( _director, style.path );
+                this._defineTie( tieRef, obj.base, obj.path, elBase, property, style.canWrite);
+            }
+            this.save(); this.update();            
         };
         
         
