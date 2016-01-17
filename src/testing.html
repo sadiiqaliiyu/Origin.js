@@ -26,6 +26,9 @@
             <b>class:</b>  <span>=window.myClass</span><br/>
             <b>font-size:</b>  <span>=window.mySize</span>
         </div>
+        <input type="button" onclick="Origin.Tie.turnOff()" value="turn off automatic">
+        <input type="button" onclick="Origin.Tie.turnOn()" value="turn on automatic"><br>
+        <input type="button" onclick="update()" value="Update Yourself">
     </body> 
     <script type ="text/javascript">
         /*global Origin*/
@@ -36,6 +39,11 @@
             var test = document.querySelector("#test");
             var tieTest = Origin.Tie.get(test);
             tieTest.parse({"window":window}, true);
+        }
+        function update(){
+            var test = document.querySelector("#test");
+            var tieTest = Origin.Tie.get(test);
+            tieTest.updateTree();
         }
     </script>
 </html>

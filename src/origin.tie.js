@@ -201,21 +201,36 @@ Origin.Tie = new(function OriginTie(){
     
         /// SYNCING VALUES TOGETHER
         this.update = function update(){
+            var changes = false;
             for( var I in this.tiedData ){
                 var tie = this.tiedData[I];
                 var currentVal = tie.elPropBase[tie.elProp];
                 var objData = tie.objData();
                 if( currentVal !== tie.previousValue ){
-                    console.log("updating the base value");
                     objData.base[objData.property] = currentVal;
+                    changes = true;
                 }
                 else if ( currentVal !== objData.value ){
                     tie.elPropBase[tie.elProp] = objData.value;
+                    changes = true;
                 }
                 // standard save.
                 tie.previousValue = tie.elPropBase[tie.elProp];
             }
+            return changes;
         };
+        
+        this.updateTree = function updateTree(){
+            do{
+                var loop = false;
+                // parses all of our children given the list of our children
+                for( var tie of getAllChildren( this.el, [this] ) ){
+                    if( tie.update() ) {
+                        loop = true;
+                    }
+                }
+            } while( loop );
+        }
         this.save = function save(){
             for( var I in this.tiedData ){
                 var tie = this.tiedData[I];
@@ -313,7 +328,19 @@ Origin.Tie = new(function OriginTie(){
         
         /// IMPERATIVE BINDING, bind properties directly with JS
         this.tieAttributes = function tieAttributes( _director, attrList){
-            
+            var el = this.el;
+            for( var I in attrList ){
+                var attr = attrList[I];
+                var property = attr.name;
+                var base;
+                if( el[property] ){
+                    base = el;
+                }
+                else{
+                    
+                }
+                //this._defineTie( tieRef, objBase, objPath, elBase, elProp, canWrite);
+            }
         };
         this.tieStyles = function tieStyles( _director, styleList ){
             
