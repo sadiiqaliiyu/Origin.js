@@ -38,7 +38,6 @@ Origin.Tie = new(function OriginTie(){
         };
     })();
     
-
     /*
         @summary: Provides error checking for any directors passed to us.
     */
@@ -418,10 +417,23 @@ Origin.Tie = new(function OriginTie(){
         
         /// UNBINDING, only with JS.
         this.untieAttributes = function untieAttributes( attrList){
-            
+            for( var I in attrList ){
+                delete this.tiedData["attr-"+ attrList[I]];
+            }
         };
         this.untieStyles = function untieStyles( styleList){
-            
+            for( var I in styleList ){
+                delete this.tiedData["style-"+ styleList[I]];
+            }
+        };
+        this.untieAll = function(){
+            this.tiedData = {};
+        };
+        
+        this.remove = function(){
+            this.untieAll();
+            delete automaticTies[this.tieID];
+            delete tieList[this.tieID];
         };
         
     })();
