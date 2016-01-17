@@ -272,7 +272,9 @@ Origin.Tie = new(function OriginTie(){
             do{
                 var loop = false;
                 // parses all of our children given the list of our children
-                for( var tie of getAllChildren( this.el, [this] ) ){
+                var children = getAllChildren( this.el, [this] );
+                for( var i in children){
+                    var tie = children[i];
                     if( tie.update() ) {
                         loop = true;
                     }
@@ -310,7 +312,8 @@ Origin.Tie = new(function OriginTie(){
             var parseTies = [ this ];
             if( onChildren ){getAllChildren( this.el, parseTies );}
             // parses all of our children given the list of our children
-            for( var tie of parseTies ){
+            for( var I in parseTies ){
+                var tie = parseTies[I];
                 tie._parseAttributes( _director );
                 tie._parseStyles( _director );
                 tie._parseContent( _director );
@@ -362,7 +365,8 @@ Origin.Tie = new(function OriginTie(){
             if( !styleString ){return;}
             var styles = styleString.split(";");
             var base = this.el.style;
-            for( var parseStr of styles ){
+            for( var I in styles ){
+                var parseStr = styles[I];
                 var toIndex = parseStr.indexOf(":");
                 var property = parseStr.substr(0, toIndex);
                 var val = parseStr.substring( toIndex +1, parseStr.length);
