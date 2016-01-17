@@ -24,6 +24,7 @@
     - originEl.bindStyles
     - originEl.bindAttributes
 - [x] make elements untieable 
+- [x] fix tie removal. Should always be deep.
 - [ ] fix bubbling for errors. Currently, non-helpful stack-traces appear.
 - [ ] edit documentation for errors and add new errors 
 - [ ] minimize origin.tie

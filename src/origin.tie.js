@@ -441,8 +441,13 @@ Origin.Tie = new(function OriginTie(){
         
         this.remove = function(){
             this.untieAll();
-            delete automaticTies[this.tieID];
-            delete tieList[this.tieID];
+            var removeTies = getAllChildren( this.el, [this] );
+            for( var I in removeTies ){
+                var tie = removeTies[I];
+                tie.el.removeAttribute("data-origin-id");
+                delete automaticTies[tie.tieID];
+                delete tieList[tie.tieID];
+            }
         };
         
     })();
