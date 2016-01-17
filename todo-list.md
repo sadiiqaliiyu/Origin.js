@@ -10,7 +10,7 @@
 - [x] made wiki
 # Todo 
 
-### tasks: 1/12/2016 -
+### tasks: 1/12/2016 - 1/17/2016
 - ~~[ ] fix up and standardize the dom wrapper~~
 - [x] Make new system for syncing dom with Origin.
     - [x] main update branch
@@ -20,9 +20,16 @@
 - [x] make a dom parsing system 
     - if an attribute has binding(or innerHTML), add binding for that element 
     - if inline-styling has binding then add binding for that element
-- [ ] for binding dom nodes individually, make a function for supported events
+- [x] for binding dom nodes individually, make a function for supported events
     - originEl.bindStyles
     - originEl.bindAttributes
+- [x] make elements untieable 
+- [ ] fix bubbling for errors. Currently, non-helpful stack-traces appear.
+- [ ] edit documentation for errors and add new errors 
+- [ ] minimize origin.tie
+
+### tasks 1/17/2016 - 
+- [ ] possibly change `Origin.Tie.get` into `Origin.Tie()` and append functions to that.
 - [ ] make default origin setter return true, not the passed value.
 - [ ] Ignore functions on deep-rooting
 - [ ] actually create the objectQuery system 

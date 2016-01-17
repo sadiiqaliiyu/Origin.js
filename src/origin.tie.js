@@ -30,11 +30,16 @@ Origin.Tie = new(function OriginTie(){
         }
         attrNonExistent.id = "OGAttrNULL"
         
+        
+        var htmlElOnly = new Error("Only HTML Elements are excepted.");
+        htmlElOnly.id = "OGDomNonEl";
+        
         return {
             directorNotObject: directorNotObject,
             overTied: overTied,
             objNotInDirector: objNotInDirector,
-            attrNonExistent: attrNonExistent
+            attrNonExistent: attrNonExistent,
+            htmlElOnly: htmlElOnly
         };
     })();
     
@@ -445,9 +450,7 @@ Origin.Tie = new(function OriginTie(){
     this.get = function OriginDom(el) {
         // we only want to apply listening to html elements. 
         if (el instanceof HTMLElement === false) {
-            var err = new Error("Only HTML Elements are excepted.");
-            err.id = "OGDomNonEl";
-            throw err;
+            throw Errors.htmlElOnly;
         }
         
         // check if element has an origin reference, else make one. 
@@ -461,4 +464,3 @@ Origin.Tie = new(function OriginTie(){
     };
     
 })();
-
